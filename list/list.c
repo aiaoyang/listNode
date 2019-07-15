@@ -26,8 +26,9 @@ int main()
         // add_to_tail(&l2, i * 3);
         // add_to_tail(&l1, i);
     }
-    mergeList(l1, l2);
-    // printList(l1);
+    delete (&l1, 5);
+    // mergeList(l1, l2);
+    printList(l1);
     // printf("l2 is :");
     // printList(l2);
 }
@@ -63,6 +64,36 @@ void add_to_tail(struct node **list, int data)
     cur->next = tmpNode;
     return;
 }
+void delete (struct node **list, int position)
+{
+    struct node *cur, *tmp;
+    int n = 1;
+    cur = (*list);
+    if (position <= 0)
+    {
+        printf("position less than 0\n");
+        return;
+    }
+    if (position == 1)
+    {
+        *list = cur->next;
+        return;
+    }
+    // move cur to position's pre node;
+    while (n < position - 1)
+    {
+        cur = cur->next;
+        n++;
+    }
+    if (!cur->next)
+    {
+        printf("position is longer than list's length\n");
+        return;
+    }
+    tmp = cur->next;
+    cur->next = cur->next->next;
+    free(tmp);
+}
 void printList(struct node *list)
 {
     int len = 0;
@@ -94,6 +125,7 @@ void mergeList(struct node *list1, struct node *list2)
     if (!list2 && list1)
     {
         printf("list2 is nil\n");
+
         l3 = p1;
         return;
     }
